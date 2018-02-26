@@ -1,6 +1,6 @@
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=8
 
-PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_GENERIC_PROPERTIES += \
     keyguard.no_require_sim=true \
     ro.com.google.clientidbase=android-google \
     ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
@@ -11,7 +11,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.rotation_locked=true
 
 # Mark as eligible for Google Assistant
-PRODUCT_PROPERTY_OVERRIDES += ro.opa.eligible_device=true
+PRODUCT_GENERIC_PROPERTIES += ro.opa.eligible_device=true
 
 # Google Dialer fix
 PRODUCT_COPY_FILES +=  \
@@ -49,11 +49,11 @@ PRODUCT_PACKAGES += \
 
 # Tethering - allow without requiring a provisioning app
 # (for devices that check this)
-PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_GENERIC_PROPERTIES += \
     net.tethering.noprovisioning=true
 
 # Media
-PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_GENERIC_PROPERTIES += \
     media.recorder.show_manufacturer_and_model=true
 
 ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
@@ -92,9 +92,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 ifneq ($(TARGET_BUILD_VARIANT),user)
 # Thank you, please drive thru!
-PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0
+PRODUCT_GENERIC_PROPERTIES += persist.sys.dun.override=0
 # RecueParty? No thanks.
-PRODUCT_PROPERTY_OVERRIDES += persist.sys.enable_rescue=false
+PRODUCT_GENERIC_PROPERTIES += persist.sys.enable_rescue=false
 endif
 
 # LiteOS versioning system
@@ -128,7 +128,7 @@ LITE_MOD_VERSION := LiteOS-$(LITE_VERSION_CODENAME)-$(AOSP_VERSION_CODENAME)-$(L
 endif
 
 # lite sprcific build properties
-PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_GENERIC_PROPERTIES += \
     ro.build.display.id=$(LITE_BUILD_TYPE)$(LITE_POSTFIX) \
     ro.lite.version=$(LITE_VERSION_CODENAME)
     
@@ -136,7 +136,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 ifeq ($(LITE_RELEASE),true)
 PRODUCT_PACKAGES += OpenDelta
 
-PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_GENERIC_PROPERTIES += \
     lite.ota.delta=$(LITE_MOD_VERSION) \
     ro.lite.device=$(LITE_BUILD)
 endif
