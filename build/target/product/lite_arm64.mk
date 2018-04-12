@@ -16,3 +16,7 @@ $(call inherit-product, build/target/product/aosp_arm64.mk)
 $(call inherit-product, vendor/lite/lite.mk)
 
 PRODUCT_NAME := lite_arm64
+
+# Allow building otatools
+TARGET_FORCE_OTA_PACKAGE := true
+
