@@ -50,8 +50,8 @@ PRODUCT_COPY_FILES += \
 # Packages
 PRODUCT_PACKAGES += \
     GBoard \
-    GMessaging \
-    RetroMusicPlayer
+    RetroMusicPlayer \
+	Clock
 
 ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
   PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
