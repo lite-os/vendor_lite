@@ -51,7 +51,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     GBoard \
     RetroMusicPlayer \
-	Clock
+	Clock \
+	Launcher3
 
 ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
   PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
