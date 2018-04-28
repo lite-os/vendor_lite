@@ -52,7 +52,8 @@ PRODUCT_PACKAGES += \
     GBoard \
     RetroMusicPlayer \
 	Clock \
-	Launcher3
+	Launcher3 \
+    GooglePhotos
 
 ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
   PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \

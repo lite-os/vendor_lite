@@ -74,3 +74,22 @@ LOCAL_DEX_PREOPT := false
 DONT_DEXPREOPT_PREBUILTS := true
 LOCAL_OVERRIDES_PACKAGES := DeskClock
 include $(BUILD_PREBUILT)
+
+###############################################################################
+# Google Photos 3.19.0.194452507
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := GooglePhotos
+LOCAL_MODULE_CLASS := APPS
+LOCAL_MODULE_TAGS := optional
+LOCAL_BUILT_MODULE_STEM := package.apk
+LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
+LOCAL_PRIVILEGED_MODULE := false
+LOCAL_CERTIFICATE := PRESIGNED
+LOCAL_OVERRIDES_PACKAGES := Gallery Gallery2
+LOCAL_SRC_FILES := $(LOCAL_MODULE)/$(LOCAL_MODULE)_$(my_src_arch).apk
+LOCAL_MODULE_TARGET_ARCH := $(my_src_arch)
+LOCAL_MULTILIB := both
+LOCAL_DEX_PREOPT := false
+DONT_DEXPREOPT_PREBUILTS := true
+include $(BUILD_PREBUILT)
