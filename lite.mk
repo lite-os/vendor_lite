@@ -134,3 +134,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.modversion=$(LITE_MOD_VERSION) \
     ro.lite.buildtype=$(LITE_BUILD_TYPE) \
     ro.build.display.id=$(AOSP_VERSION_CODENAME)-$(LITE_VERSION_CODENAME)-$(LITE_BUILD_TYPE)
+    
+# Check
+#PRODUCT_PACKAGES += \
+#    SettingsBlackTheme \
+#    SettingsBlackThemeOverlay \
+#    SystemBlackTheme \ 
+#    SystemBlackThemeOverlay \
+#    SysuiDarkTheme \
+#    SysuiDarkThemeOverlay 
