@@ -97,8 +97,8 @@ PRODUCT_PROPERTY_OVERRIDES += persist.sys.enable_rescue=false
 endif
 
 # LiteOS versioning system
-AOSP_VERSION_CODENAME := O
-LITE_VERSION_CODENAME := 8.1.23
+AOSP_VERSION_CODENAME := 8.1.0
+LITE_VERSION_CODENAME := OREO
 ifndef LITE_BUILD_TYPE
 ifeq ($(LITE_RELEASE),true)
     LITE_BUILD_TYPE := OFFICIAL
@@ -121,25 +121,19 @@ endif
 # Output zip naming
 LITE_VERSION := LiteOS-$(LITE_VERSION_CODENAME)-$(AOSP_VERSION_CODENAME)-$(LITE_BUILD_TYPE)$(LITE_POSTFIX)
 ifeq ($(LITE_RELEASE),true)
-LITE_MOD_VERSION := LiteOS-$(LITE_VERSION_CODENAME)-$(AOSP_VERSION_CODENAME)-$(LITE_BUILD)-$(LITE_BUILD_TYPE)$(LITE_POSTFIX)
+LITE_MOD_VERSION := LiteOS-$(AOSP_VERSION_CODENAME)-$(LITE_POSTFIX)-$(LITE_BUILD)-$(LITE_BUILD_TYPE)$(LITE_VERSION_CODENAME)
 else
 LITE_MOD_VERSION := LiteOS-$(LITE_VERSION_CODENAME)-$(AOSP_VERSION_CODENAME)-$(LITE_BUILD)$(LITE_POSTFIX)
 endif
 
 # lite sprcific build properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    lite.ota.version=$(LITE_MOD_VERSION) \
-    ro.lite.device=$(LITE_BUILD) \
-    ro.lite.version=$(LITE_VERSION_CODENAME) \
-    ro.modversion=$(LITE_MOD_VERSION) \
-    ro.lite.buildtype=$(LITE_BUILD_TYPE) \
     ro.build.display.id=$(AOSP_VERSION_CODENAME)-$(LITE_VERSION_CODENAME)-$(LITE_BUILD_TYPE)
     
-# Check
-#PRODUCT_PACKAGES += \
-#    SettingsBlackTheme \
-#    SettingsBlackThemeOverlay \
-#    SystemBlackTheme \ 
-#    SystemBlackThemeOverlay \
-#    SysuiDarkTheme \
-#    SysuiDarkThemeOverlay 
+# Build OTA official builds
+ifeq ($(LITE_RELEASE),true)
+PRODUCT_PACKAGES += OpenDelta
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    lite.ota.delta=$(LITE_MOD_VERSION)
+endif
