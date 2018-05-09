@@ -135,5 +135,6 @@ ifeq ($(LITE_RELEASE),true)
 PRODUCT_PACKAGES += OpenDelta
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    lite.ota.delta=$(LITE_MOD_VERSION)
+    lite.ota.delta=$(LITE_MOD_VERSION) \
+    ro.lite.device=$(LITE_BUILD)
 endif
