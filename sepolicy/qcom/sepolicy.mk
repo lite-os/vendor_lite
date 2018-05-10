@@ -4,4 +4,4 @@
 #
 
 BOARD_SEPOLICY_DIRS += \
-    vendor/aospgs/sepolicy/qcom
+    vendor/lite/sepolicy/qcom
