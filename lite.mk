@@ -138,3 +138,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
     lite.ota.delta=$(LITE_MOD_VERSION) \
     ro.lite.device=$(LITE_BUILD)
 endif
+
+-include vendor/lite/sepolicy/common/sepolicy.mk
