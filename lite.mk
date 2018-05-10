@@ -128,7 +128,8 @@ endif
 
 # lite sprcific build properties
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.build.display.id=$(LITE_BUILD_TYPE)$(LITE_POSTFIX)
+    ro.build.display.id=$(LITE_BUILD_TYPE)$(LITE_POSTFIX) \
+    ro.lite.version=$(LITE_VERSION_CODENAME)
     
 # Build OTA official builds
 ifeq ($(LITE_RELEASE),true)
