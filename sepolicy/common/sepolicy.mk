@@ -4,4 +4,4 @@
 #
 
 BOARD_SEPOLICY_DIRS += \
-    vendor/aospgs/sepolicy/common
+    vendor/lite/sepolicy/common
