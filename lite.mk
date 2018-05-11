@@ -139,3 +139,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     lite.ota.delta=$(LITE_MOD_VERSION) \
     ro.lite.device=$(LITE_BUILD)
 endif
+
+# Themes
+include vendor/lite/themes/config.mk
