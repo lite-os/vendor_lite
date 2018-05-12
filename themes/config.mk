@@ -3,4 +3,6 @@ PRODUCT_PACKAGES += \
     SystemBlackTheme \
     SystemDarkTheme \
     SettingsBlackTheme \
-    SettingsDarkTheme 
+    SettingsDarkTheme \
+    DuiDarkTheme \
+    DuiBlackTheme 

@@ -28,10 +28,12 @@ public class Themes {
 
     private static final List<String> darkOverlays = Arrays.asList("com.android.system.theme.dark", 
                                                                    "com.android.settings.theme.dark", 
+                                                                   "com.android.dui.theme.dark", 
                                                                    "com.android.gboard.theme.dark");
 
     private static final List<String> blackOverlays = Arrays.asList("com.android.system.theme.black", 
                                                                     "com.android.settings.theme.black", 
+                                                                    "com.android.dui.theme.black", 
                                                                     "com.android.gboard.theme.black");
 
     public static void updateDarkOverlays(IOverlayManager mOverlayManager, Boolean enabled, int mCurrentUserId){
