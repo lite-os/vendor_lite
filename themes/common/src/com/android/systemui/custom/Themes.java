@@ -30,7 +30,7 @@ public class Themes {
                                                                    "com.android.settings.theme.dark");
 
     private static final List<String> blackOverlays = Arrays.asList("com.android.system.theme.black", 
-                                                                    "com.android.settings.theme.black);
+                                                                    "com.android.settings.theme.black");
 
     public static void updateDarkOverlays(IOverlayManager mOverlayManager, Boolean enabled, int mCurrentUserId){
         for (String overlay : darkOverlays) {
