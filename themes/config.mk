@@ -28,4 +28,4 @@ PRODUCT_PACKAGES += \
     RedAccent \
     TealAccent \
     YellowAccent \
-    WhiteAccent    
+    WhiteAccent
