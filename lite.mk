@@ -45,11 +45,7 @@ PRODUCT_COPY_FILES += \
 
 # Packages
 PRODUCT_PACKAGES += \
-    GBoard \
-    RetroMusicPlayer \
-	Clock \
-	Launcher3 \
-    GooglePhotos
+	Launcher3
 
 ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
   PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -136,5 +132,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.lite.device=$(LITE_BUILD)
 endif
 
-# overlay
+# LiteOS
+include LiteOS/apps/prebuilt/config.mk
 include LiteOS/overlay/config.mk
