@@ -1,9 +1,5 @@
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=8
 
-# Overlays
-PRODUCT_PACKAGE_OVERLAYS += \
-	vendor/lite/overlay
-
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     ro.com.google.clientidbase=android-google \
@@ -140,5 +136,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.lite.device=$(LITE_BUILD)
 endif
 
-# Themes
-include vendor/lite/themes/config.mk
+# overlay
+include LiteOS/overlay/config.mk
