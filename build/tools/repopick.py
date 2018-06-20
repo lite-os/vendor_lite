@@ -31,16 +31,19 @@ import textwrap
 from xml.etree import ElementTree
 
 try:
-    # For python3
-    import urllib.error
-    import urllib.request
+    import requests
 except ImportError:
-    # For python2
-    import imp
-    import urllib2
-    urllib = imp.new_module('urllib')
-    urllib.error = urllib2
-    urllib.request = urllib2
+    try:
+        # For python3
+        import urllib.error
+        import urllib.request
+    except ImportError:
+        # For python2
+        import imp
+        import urllib2
+        urllib = imp.new_module('urllib')
+        urllib.error = urllib2
+        urllib.request = urllib2
 
 
 # Verifies whether pathA is a subdirectory (or the same) as pathB
@@ -99,11 +102,29 @@ def fetch_query_via_ssh(remote_url, query):
 
 
 def fetch_query_via_http(remote_url, query):
-
-    """Given a query, fetch the change numbers via http"""
-    url = '{0}/changes/?q={1}&o=CURRENT_REVISION&o=ALL_REVISIONS'.format(remote_url, query)
-    data = urllib.request.urlopen(url).read().decode('utf-8')
-    reviews = json.loads(data[5:])
+    if "requests" in sys.modules:
+        auth = None
+        if os.path.isfile(os.getenv("HOME") + "/.gerritrc"):
+            f = open(os.getenv("HOME") + "/.gerritrc", "r")
+            for line in f:
+                parts = line.rstrip().split("|")
+                if parts[0] in remote_url:
+                    auth = requests.auth.HTTPBasicAuth(username=parts[1], password=parts[2])
+        statusCode = '-1'
+        if auth:
+            url = '{0}/a/changes/?q={1}&o=CURRENT_REVISION&o=ALL_REVISIONS'.format(remote_url, query)
+            data = requests.get(url, auth=auth)
+            statusCode = str(data.status_code)
+        if statusCode != '200':
+            #They didn't get good authorization or data, Let's try the old way
+            url = '{0}/changes/?q={1}&o=CURRENT_REVISION&o=ALL_REVISIONS'.format(remote_url, query)
+            data = requests.get(url)
+        reviews = json.loads(data.text[5:])
+    else:
+        """Given a query, fetch the change numbers via http"""
+        url = '{0}/changes/?q={1}&o=CURRENT_REVISION&o=ALL_REVISIONS'.format(remote_url, query)
+        data = urllib.request.urlopen(url).read().decode('utf-8')
+        reviews = json.loads(data[5:])
 
     for review in reviews:
         review['number'] = review.pop('_number')
@@ -153,6 +174,7 @@ if __name__ == '__main__':
     parser.add_argument('-Q', '--query', help='pick all commits using the specified query')
     parser.add_argument('-g', '--gerrit', default=default_gerrit, help='Gerrit Instance to use. Form proto://[user@]host[:port]')
     parser.add_argument('-e', '--exclude', nargs=1, help='exclude a list of commit numbers separated by a ,')
+    parser.add_argument('-c', '--check-picked', type=int, default=10, help='pass the amount of commits to check for already picked changes')
     args = parser.parse_args()
     if not args.start_branch and args.abandon_first:
         parser.error('if --abandon-first is set, you must also give the branch name with --start-branch')
@@ -236,10 +258,10 @@ if __name__ == '__main__':
     change_numbers = []
     if args.topic:
         reviews = fetch_query(args.gerrit, 'topic:{0}'.format(args.topic))
-        change_numbers = sorted([str(r['number']) for r in reviews])
+        change_numbers = sorted([str(r['number']) for r in reviews], key=int)
     if args.query:
         reviews = fetch_query(args.gerrit, args.query)
-        change_numbers = sorted([str(r['number']) for r in reviews])
+        change_numbers = sorted([str(r['number']) for r in reviews], key=int)
     if args.change_number:
         for c in args.change_number:
             if '-' in c:
@@ -320,7 +342,7 @@ if __name__ == '__main__':
             subprocess.check_output(['repo', 'start', args.start_branch[0], project_path])
 
         # Determine the maximum commits to check already picked changes
-        check_picked_count = 10
+        check_picked_count = args.check_picked
         branch_commits_count = int(subprocess.check_output(['git', 'rev-list', '--count', 'HEAD'], cwd=project_path))
         if branch_commits_count <= check_picked_count:
             check_picked_count = branch_commits_count - 1

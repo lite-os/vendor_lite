@@ -47,6 +47,15 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
 	Launcher3
 
+# Tethering - allow without requiring a provisioning app
+# (for devices that check this)
+PRODUCT_PROPERTY_OVERRIDES += \
+    net.tethering.noprovisioning=true
+
+# Media
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.recorder.show_manufacturer_and_model=true
+
 ifeq ($(BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE),)
   PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.device.cache_dir=/data/cache
@@ -78,7 +87,7 @@ PRODUCT_COPY_FILES += \
     vendor/lite/prebuilt/common/etc/init.local.rc:root/init.lite.rc
 
 # Show SELinux preference in Settings->System->About phone
-PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.build.selinux=1
 
 ifneq ($(TARGET_BUILD_VARIANT),user)
@@ -86,6 +95,11 @@ ifneq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0
 # RecueParty? No thanks.
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.enable_rescue=false
+endif
+
+# enable ADB authentication if not on eng build
+ifneq ($(TARGET_BUILD_VARIANT),eng)
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.adb.secure=1
 endif
 
 # LiteOS versioning system
@@ -118,18 +132,9 @@ else
 LITE_MOD_VERSION := LiteOS-$(LITE_VERSION_CODENAME)-$(AOSP_VERSION_CODENAME)-$(LITE_BUILD)$(LITE_POSTFIX)
 endif
 
-# lite sprcific build properties
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.build.display.id=$(LITE_BUILD_TYPE)$(LITE_POSTFIX) \
-    ro.lite.version=$(LITE_VERSION_CODENAME)
-    
 # Build OTA official builds
 ifeq ($(LITE_RELEASE),true)
 PRODUCT_PACKAGES += OpenDelta
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    lite.ota.delta=$(LITE_MOD_VERSION) \
-    ro.lite.device=$(LITE_BUILD)
 endif
 
 # LiteOS
