@@ -8,7 +8,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.enterprise_mode=1 \
     ro.com.android.dateformat=MM-dd-yyyy \
     ro.com.android.dataroaming=false \
-    ro.setupwizard.rotation_locked=true
+    ro.setupwizard.rotation_locked=true \
+    ro.atrace.core.services=com.google.android.gms,com.google.android.gms.ui,com.google.android.gms.persistent
+
+# Some permissions
+PRODUCT_COPY_FILES += \
+    vendor/lite/config/permissions/backup.xml:system/etc/sysconfig/backup.xml \
+    vendor/lite/config/permissions/privapp-permissions-lite.xml:system/etc/permissions/privapp-permissions-lite.xml
 
 # Mark as eligible for Google Assistant
 PRODUCT_PROPERTY_OVERRIDES += ro.opa.eligible_device=true
