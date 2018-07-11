@@ -49,10 +49,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     vendor/lite/prebuilt/common/etc/selective-spn-conf.xml:system/etc/selective-spn-conf.xml
 
-# Packages
-PRODUCT_PACKAGES += \
-	Launcher3
-
 # Tethering - allow without requiring a provisioning app
 # (for devices that check this)
 PRODUCT_PROPERTY_OVERRIDES += \
