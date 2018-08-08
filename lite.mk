@@ -145,3 +145,10 @@ PRODUCT_COPY_FILES += \
     vendor/lite/prebuilt/common/bin/backuptool_ab.functions:system/bin/backuptool_ab.functions \
     vendor/lite/prebuilt/common/bin/backuptool_postinstall.sh:system/bin/backuptool_postinstall.sh
 endif
+
+#defauilt audio
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.config.ringtone=Ring_Synth_04.ogg \
+    ro.config.notification_sound=OhTheHunt.ogg \
+    ro.config.alarm_alert=Alarm_Classic.ogg
+
