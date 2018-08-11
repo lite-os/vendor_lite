@@ -43,7 +43,7 @@ DEBUG = False
 default_manifest = ".repo/manifest.xml"
 
 custom_local_manifest = ".repo/local_manifests/lite_manifest.xml"
-custom_default_revision = "8.1"
+custom_default_revision = "9.0"
 custom_dependencies = "lite.dependencies"
 org_manifest = "lite-os-devices"  # leave empty if org is provided in manifest
 org_display = "lite-os-devices"  # needed for displaying
