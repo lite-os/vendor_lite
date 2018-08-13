@@ -1,7 +1,7 @@
 # lite sprcific build properties
 ADDITIONAL_BUILD_PROPERTIES += \
-    ro.build.display.id=$(LITE_BUILD_TYPE)$(LITE_POSTFIX) \
-    ro.lite.version=$(LITE_VERSION_CODENAME)
+    ro.build.display.id=LiteOS-$(LITE_VERSION)-$(LITE_BUILD_TYPE)$(LITE_POSTFIX) \
+    ro.lite.version=$(LITE_VERSION)
 
 # Build official builds
 ifeq ($(LITE_RELEASE),true)
