@@ -105,7 +105,13 @@ $(call set-device-specific-path,THERMAL,thermal,hardware/qcom/thermal)
 $(call set-device-specific-path,VR,vr,hardware/qcom/vr)
 
 $(call ril-set-path-variant,ril)
+
+ifeq ($(BOARD_USES_CAF_WLAN_HAL),true)
 $(call wlan-set-path-variant,wlan-caf)
+else
+$(call wlan-set-path-variant,wlan)
+endif
+
 $(call bt-vendor-set-path-variant,bt-caf)
 
 else
