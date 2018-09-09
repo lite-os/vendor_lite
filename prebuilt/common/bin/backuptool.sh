@@ -5,7 +5,7 @@
 
 export C=/tmp/backupdir
 export S=/system
-export V=8.1
+export V=v10
 
 export ADDOND_VERSION=1
 
@@ -48,9 +48,9 @@ check_prereq() {
 if [ ! -r /system/build.prop ]; then
     return 0
 fi
-if ( ! grep -q "^ro.build.version.release=$V.*" /system/build.prop ); then
-  echo "Not backing up files from incompatible version: $V"
-  return 0
+if ! grep -q "^ro.lite.version=$V.*" /system/build.prop; then
+    echo "Not backing up files from incompatible version: $V"
+    return 0
 fi
 return 1
 }
