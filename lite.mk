@@ -153,7 +153,7 @@ endif
 
 #defauilt audio
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.config.ringtone=Ring_Synth_04.ogg \
-    ro.config.notification_sound=OhTheHunt.ogg \
-    ro.config.alarm_alert=Alarm_Classic.ogg
+    ro.config.ringtone=Zen_too.ogg \
+    ro.config.notification_sound=Beginning.ogg \
+    ro.config.alarm_alert=Bright_morning.ogg
 
