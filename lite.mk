@@ -38,8 +38,7 @@ PRODUCT_PACKAGES += \
 
 # Telephony packages
 PRODUCT_PACKAGES += \
-    CellBroadcastReceiver \
-    Stk
+    CellBroadcastReceiver
 
 # World APN list
 PRODUCT_COPY_FILES += \
