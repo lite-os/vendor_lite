@@ -1,4 +1,5 @@
 # Copyright (C) 2012 The CyanogenMod Project
+#           (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -135,16 +136,6 @@ else
     KERNEL_ADDITIONAL_CONFIG_SRC := /dev/null
 endif
 
-## Do be discontinued in a future version. Notify builder about target
-## kernel format requirement
-ifeq ($(BOARD_KERNEL_IMAGE_NAME),)
-ifeq ($(BOARD_USES_UBOOT),true)
-        $(error "Please set BOARD_KERNEL_IMAGE_NAME to uImage")
-else ifeq ($(BOARD_USES_UNCOMPRESSED_BOOT),true)
-        $(error "Please set BOARD_KERNEL_IMAGE_NAME to Image")
-endif
-endif
-
 ifeq "$(wildcard $(KERNEL_SRC) )" ""
     ifneq ($(TARGET_PREBUILT_KERNEL),)
         HAS_PREBUILT_KERNEL := true
@@ -163,7 +154,6 @@ ifeq "$(wildcard $(KERNEL_SRC) )" ""
         $(warning * THIS IS DEPRECATED, AND WILL BE DISCONTINUED                *)
         $(warning * Please configure your device to download the kernel         *)
         $(warning * source repository to $(KERNEL_SRC))
-        $(warning * See http://wiki.cyanogenmod.org/w/Doc:_integrated_kernel_building)
         $(warning * for more information                                        *)
         $(warning ***************************************************************)
         FULL_KERNEL_BUILD := false
@@ -247,12 +237,10 @@ ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
         # Find the clang-* directory containing the specified version
         KERNEL_CLANG_VERSION := $(shell find $(BUILD_TOP)/prebuilts/clang/host/$(HOST_OS)-x86/ -name AndroidVersion.txt -exec grep -l $(TARGET_KERNEL_CLANG_VERSION) "{}" \; | sed -e 's|/AndroidVersion.txt$$||g;s|^.*/||g')
     else
-        # Only set the latest version of clang if TARGET_KERNEL_CLANG_VERSION hasn't been set by the device config
-        KERNEL_CLANG_VERSION := $(shell ls -d $(BUILD_TOP)/prebuilts/clang/host/$(HOST_OS)-x86/clang-* | xargs -n 1 basename | tail -1)
+        # Use the default version of clang if TARGET_KERNEL_CLANG_VERSION hasn't been set by the device config
+        KERNEL_CLANG_VERSION := $(LLVM_PREBUILTS_VERSION)
     endif
     TARGET_KERNEL_CLANG_PATH ?= $(BUILD_TOP)/prebuilts/clang/host/$(HOST_OS)-x86/$(KERNEL_CLANG_VERSION)/bin
-    KBUILD_COMPILER_STRING := $(shell $(TARGET_KERNEL_CLANG_PATH)/clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')
-    export KBUILD_COMPILER_STRING
     ifeq ($(KERNEL_ARCH),arm64)
         KERNEL_CLANG_TRIPLE ?= CLANG_TRIPLE=aarch64-linux-gnu-
     else ifeq ($(KERNEL_ARCH),arm)
@@ -282,9 +270,9 @@ else
     KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN_PATH)"
 endif
 
-# IDK why new kernels want this...
+# Needed for CONFIG_COMPAT_VDSO, safe to set for all arm64 builds
 ifeq ($(KERNEL_ARCH),arm64)
-   KERNEL_CROSS_COMPILE += CROSS_COMPILE_ARM32="$(ccache) $(BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
+   KERNEL_CROSS_COMPILE += CROSS_COMPILE_ARM32="arm-linux-androidkernel-"
 endif
 
 ccache =
