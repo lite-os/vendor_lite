@@ -17,7 +17,6 @@
 
 # Add colors
 ifneq ($(BUILD_WITH_COLORS),0)
-  CL_SGRY="\033[38;5;239m"
   CL_RST="\033[0m"
   CL_YLW="\033[33m"
   CL_BLU="\033[34m"
@@ -32,6 +31,7 @@ lite: bacon
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(LITE_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(LITE_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(LITE_TARGET_PACKAGE).md5sum
+	@echo "Building: bacon, lite"
 	@echo -e ${CL_BLU}${CL_CYN}"===============================-Package complete-==============================="${CL_RST}
 	@echo -e ${CL_BLU}${CL_YLW}"Zip: "${CL_YLW} $(LITE_TARGET_PACKAGE)${CL_RST}
 	@echo -e ${CL_BLU}${CL_YLW}"MD5: "${CL_YLW}" `cat $(LITE_TARGET_PACKAGE).md5sum | awk '{print $$1}' `"${CL_RST}
