@@ -23,7 +23,7 @@ ifneq ($(BUILD_WITH_COLORS),0)
 endif
 
 # LiteOS test package
-LITE_PAC_VERSION := $(LITE_BUILD)-$(LITE_BUILD_TYPE)_$(shell date +"%m-%d_%H-%M")
+LITE_PAC_VERSION := $(LITE_BUILD_TYPE)-$(LITE_BUILD)-$(shell date +"%d%m%H%M")
 LITE_OTA_PACKAGE := $(PRODUCT_OUT)/$(LITE_PAC_VERSION).zip
 
 .PHONY: tpac
